@@ -77,7 +77,8 @@ WSGI_APPLICATION = 'chatbot_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/Users/mac/Documents/chatbot_django/chatbot_django/db.sqlite3',  # Corrected path
+        'NAME': BASE_DIR / 'db.sqlite3',
+ 
     }
 }
 

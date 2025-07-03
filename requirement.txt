@@ -1,7 +1,3 @@
 streamlit==1.26.0
-sqlite3  # sqlite3 is part of Python's standard library, so no need to include this in the file.
-groq==1.0.0  # Replace with the actual version you're using for the Groq library.
-datetime  # Part of Python's standard library, not needed in requirements.txt.
-os  # Part of Python's standard library, not needed in requirements.txt.
-json  # Part of Python's standard library, not needed in requirements.txt.
+groq 
 django

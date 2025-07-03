@@ -4,10 +4,27 @@ from datetime import datetime
 import json
 import os
 from groq import Groq
+from pathlib import Path
+
+
+# Define BASE_DIR as project root
+BASE_DIR = Path(__file__).resolve().parent.parent
+DB_PATH = BASE_DIR / "db.sqlite3"
+
+# Load Groq API key from config file
+CONFIG_PATH = Path(__file__).resolve().parent / "config.json"
+with open(CONFIG_PATH, "r") as f:
+    config_data = json.load(f)
+
+GROQ_API_KEY = config_data["GROQ_API_KEY"]
+os.environ["GROQ_API_KEY"] = GROQ_API_KEY
+
+client = Groq()
+
 
 # Database setup
 def save_chat_to_db(user_id, user_message, bot_response):
-    conn = sqlite3.connect('/Users/mac/Documents/chatbot_django/chatbot_django/db.sqlite3')
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     
     cursor.execute('''
@@ -28,7 +45,7 @@ def save_chat_to_db(user_id, user_message, bot_response):
 
 # Load chat history for all prompts
 def load_chat_history(user_id):
-    conn = sqlite3.connect('/Users/mac/Documents/chatbot_django/chatbot_django/db.sqlite3')
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute('SELECT rowid, role, content, timestamp FROM analysis WHERE user_id = ? ORDER BY timestamp ASC', (user_id,))
     messages = cursor.fetchall()
@@ -37,7 +54,7 @@ def load_chat_history(user_id):
 
 # Delete a specific chat history by rowid
 def delete_chat_history(rowid):
-    conn = sqlite3.connect('/Users/mac/Documents/chatbot_django/chatbot_django/db.sqlite3')
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute('DELETE FROM analysis WHERE rowid = ?', (rowid,))
     conn.commit()
@@ -63,7 +80,7 @@ def analyze_code_with_ollama(language, code):
     return response.choices[0].message.content
 
 # Extract 'user_id' from URL parameters
-query_params = st.query_params
+query_params = st.experimental_get_query_params()
 user_id = query_params.get('user_id', [None])[0]
 
 # Check if the user is logged in via the user_id
@@ -121,7 +138,7 @@ if "user_id" in st.session_state:
             with col2:
                 if col2.button("🗑️", key=f"delete_{i}"):
                     delete_chat_history(rowid)
-                    st.rerun()  # Rerun the app to refresh the chat history
+                    st.experimental_rerun()
 
 # Display chat history for selected prompt
 if "selected_prompt" in st.session_state:
