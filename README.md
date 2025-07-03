@@ -43,8 +43,8 @@ Before running this project, make sure you have the following installed:
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd chatbot_django-master
+   git clone https://github.com/sah1l-17/chatbot_django
+   cd chatbot_django
    ```
 
 2. **Create a virtual environment**
