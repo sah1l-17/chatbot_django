@@ -67,9 +67,6 @@ Before running this project, make sure you have the following installed:
    }
    ```
 
-5. **Update database path** (if necessary)
-   - Update the database path in `chatbot_django/settings.py`
-   - Update the database path in `streamlit_chatbot/chatbot.py` and `streamlit_chatbot/practice.py`
 
 ## Running the Application
 
@@ -103,6 +100,11 @@ The Streamlit applications will typically run on:
 - CodeCatalyst: `http://localhost:8501`
 - Code Analyzer: `http://localhost:8502`
 
+If have Git Bash
+```bash
+./start_all.sh
+```
+
 ## Usage
 
 1. **Registration/Login**: Start by creating an account or logging in through the Django web interface
@@ -130,7 +132,8 @@ chatbot_django-master/
 ├── static/                   # Static files (CSS, images)
 ├── db.sqlite3               # SQLite database
 ├── manage.py                # Django management script
-└── requirement.txt          # Python dependencies
+├── requirement.txt          # Python dependencies
+└── start_all.sh             # Script to all the required server
 ```
 
 ## API Configuration
